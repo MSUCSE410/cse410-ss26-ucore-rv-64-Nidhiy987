@@ -42,13 +42,18 @@ uint64 sys_gettimeofday(TimeVal *val, int _tz)
 
 extern char trap_page[];
 
+uint64 sys_getpid()
+{
+    return curr_proc()->pid;
+}
+
 uint64 sys_task_info(struct TaskInfo *ti)
 {
 	struct proc *p = curr_proc();
 	if (ti == 0)
 		return -1;
 
-	ti->status = RUNNING;
+	ti->status = 2;   // Running in user enum
 
 	for (int i = 0; i < 500; i++) {
 		ti->syscall_times[i] = p->syscall_times[i];
@@ -87,6 +92,9 @@ void syscall()
 	case SYS_gettimeofday:
 		ret = sys_gettimeofday((TimeVal *)args[0], args[1]);
 		break;
+	case SYS_getpid:
+    	ret = sys_getpid();
+    	break;
     case SYS_task_info:
     	ret = sys_task_info((struct TaskInfo *)args[0]);
     	break;
