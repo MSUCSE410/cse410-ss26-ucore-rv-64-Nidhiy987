@@ -36,8 +36,8 @@ struct proc {
 	struct trapframe *trapframe; // data page for trampoline.S
 	struct context context; // swtch() here to run process
 
-	uint64 start_time;
-	unsigned int syscall_times[500];
+	uint64 start_time;  // first time schedules
+	unsigned int syscall_times[500]; //array that counts how many times the process has called each syscall
 	/*
 	* LAB1: you may need to add some new fields here
 	*/

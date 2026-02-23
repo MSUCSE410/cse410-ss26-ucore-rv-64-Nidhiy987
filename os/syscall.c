@@ -53,7 +53,7 @@ uint64 sys_task_info(struct TaskInfo *ti)
 	if (ti == 0)
 		return -1;
 
-	ti->status = 2;   // Running in user enum
+	ti->status = 2;   //had to run in user enum because the kernel enum and user was diff
 
 	for (int i = 0; i < 500; i++) {
 		ti->syscall_times[i] = p->syscall_times[i];
