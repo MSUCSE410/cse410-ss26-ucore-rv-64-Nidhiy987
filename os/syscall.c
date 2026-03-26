@@ -55,7 +55,7 @@ uint64 sys_task_info(struct TaskInfo *ti)
 
 	ti->status = 2;   //had to run in user enum because the kernel enum and user was diff
 
-	for (int i = 0; i < 500; i++) {
+	for (int i = 0; i < MAX_SYSCALL_NUM; i++) {
 		ti->syscall_times[i] = p->syscall_times[i];
 	}
 
@@ -69,7 +69,7 @@ void syscall()
 {
 	struct trapframe *trapframe = curr_proc()->trapframe;
 	int id = trapframe->a7, ret;
-    if (id < 500) {
+    if (id < MAX_SYSCALL_NUM) {
 	curr_proc()->syscall_times[id]++;
         }
 	uint64 args[6] = { trapframe->a0, trapframe->a1, trapframe->a2,

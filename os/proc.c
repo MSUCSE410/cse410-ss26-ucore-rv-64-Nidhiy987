@@ -29,6 +29,7 @@ void proc_init(void)
 	struct proc *p;
 	for (p = pool; p < &pool[NPROC]; p++) {
 		p->state = UNUSED;
+
 		p->kstack = (uint64)kstack[p - pool];
 		p->ustack = (uint64)ustack[p - pool];
 		p->trapframe = (struct trapframe *)trapframe[p - pool];
@@ -65,6 +66,10 @@ struct proc *allocproc(void)
 found:
 	p->pid = allocpid();
 	p->state = USED;
+
+	p->start_time = 0;  // reset start time
+	memset(p->syscall_times, 0, sizeof(p->syscall_times));
+
 	memset(&p->context, 0, sizeof(p->context));
 	memset(p->trapframe, 0, PAGE_SIZE);
 	memset((void *)p->kstack, 0, PAGE_SIZE);
