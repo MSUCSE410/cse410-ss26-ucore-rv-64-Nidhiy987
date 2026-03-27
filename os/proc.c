@@ -4,7 +4,8 @@
 #include "trap.h"
 #include "vm.h"
 #include "timer.h"   
-
+//dded fields to track process runtime and syscall usage for the taskinfo syscall, 
+// and we also introduced page table-related fields to support virtual memory in Project 2.
 
 struct proc pool[NPROC];
 __attribute__((aligned(16))) char kstack[NPROC][PAGE_SIZE];
@@ -33,7 +34,10 @@ void proc_init(void)
 		p->kstack = (uint64)kstack[p - pool];
 		p->trapframe = (struct trapframe *)trapframe[p - pool];
 		/*
-		* LAB1: you may need to initialize your new fields of proc here
+		*PROJECT 1 → PROJECT 2 CHANGE:
+		* These fields were added for tracking process info (taskinfo syscall)
+		* start_time: used to compute runtime
+		* syscall_times: count how many times each syscall is called
 		*/
 		p->start_time = 0;
 		memset(p->syscall_times, 0, sizeof(p->syscall_times));
@@ -64,6 +68,9 @@ struct proc *allocproc(void)
 	return 0;
 
 found:
+	//These fields are related to virtual memory
+	// pagetable: each process now has its own page table
+	// max_page: used for managing mapped pages (mmap)
 	p->pid = allocpid();
 	p->state = USED;
 	p->start_time = 0;   
@@ -86,6 +93,8 @@ found:
 //    via swtch back to the scheduler.
 void scheduler(void)
 {
+	//Initialize start_time when the process runs for the first time
+	// used later in sys_task_info to compute runtime
 	struct proc *p;
 	for (;;) {
 		for (p = pool; p < &pool[NPROC]; p++) {

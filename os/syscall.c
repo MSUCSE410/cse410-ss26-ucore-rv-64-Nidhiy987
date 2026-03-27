@@ -4,7 +4,7 @@
 #include "syscall_ids.h"
 #include "timer.h"
 #include "trap.h"
-#include "stddef.h"   //added this line
+#include "stddef.h"   //Needed because TaskInfo and TimeVal are defined in user space
 
 uint64 sys_write(int fd, uint64 va, uint len)
 {
@@ -34,7 +34,7 @@ uint64 sys_sched_yield()
 }
 uint64 sys_getpid()
 {
-    return curr_proc()->pid;
+    return curr_proc()->pid; // returns current process ID
 }
 
 uint64 sys_gettimeofday(TimeVal *val, int _tz) // TODO: implement sys_gettimeofday in pagetable. (VA to PA)
@@ -71,34 +71,38 @@ uint64 sys_gettimeofday(TimeVal *val, int _tz) // TODO: implement sys_gettimeofd
 // TODO: add support for mmap and munmap syscall.
 // hint: read through docstrings in vm.c. Watching CH4 video may also help.
 // Note the return value and PTE flags (especially U,X,W,R)
-/*
-* LAB1: you may need to define sys_task_info here
-*/
+
 uint64 sys_task_info(TaskInfo *ti)
 {
-    struct proc *p = curr_proc();
+    struct proc *p = curr_proc();  
 
+    // first make sure the user actually passed a valid pointer
     if (ti == 0)
         return -1;
 
-    // translate user VA → PA
+    // in Project 2, we can't directly use user pointers,
+    // so we translate the virtual address to a physical address
     uint64 pa = useraddr(p->pagetable, (uint64)ti);
     if (pa == 0)
         return -1;
 
+    // fill everything in a kernel struct first
     TaskInfo kti;
 
-    // user enum: Running = 2
+    // process is currently running
     kti.status = 2;
 
+    // copy how many times each syscall was used
     for (int i = 0; i < MAX_SYSCALL_NUM; i++) {
         kti.syscall_times[i] = p->syscall_times[i];
     }
 
+    // compute how long the process has been running
     uint64 now = get_cycle();
     kti.time = (now - p->start_time) / (CPU_FREQ / 1000);
+	//t calculates how long the process has been running in milliseconds.
 
-    // copy to user memory
+    // finally copy the data back to user space
     memmove((void *)pa, &kti, sizeof(TaskInfo));
 
     return 0;
@@ -107,32 +111,43 @@ uint64 sys_task_info(TaskInfo *ti)
 
 uint64 sys_mmap(uint64 addr, uint64 len, uint64 port, uint64 flag, uint64 fd)
 {
+    // nothing to do if length is 0
     if (len == 0) return 0;
-	if (addr >= MAXVA) return -1;
+
+    // basic checks to make sure the address is valid
+    if (addr >= MAXVA) return -1;
     if (addr == 0) return -1;
+
+    // must start on a page boundary
     if (addr % PGSIZE != 0) return -1;
 
+    // only allow R/W/X bits
     if (port & ~0x7) return -1;
     if ((port & 0x7) == 0) return -1;
 
     struct proc *p = curr_proc();
 
+    // map one page at a time
     for (uint64 a = addr; a < addr + len; a += PGSIZE) {
 
-
+        // don’t allow mapping over something that already exists
         if (walkaddr(p->pagetable, a) != 0)
             return -1;
 
+        // allocate a physical page
         void *mem = kalloc();
         if (!mem) return -1;
 
+        // clear it so it's clean
         memset(mem, 0, PGSIZE);
 
+        // build permissions
         int perm = PTE_U;
         if (port & 1) perm |= PTE_R;
         if (port & 2) perm |= PTE_W;
         if (port & 4) perm |= PTE_X;
 
+        // connect virtual address to physical memory
         if (mappages(p->pagetable, a, PGSIZE, (uint64)mem, perm) != 0)
             return -1;
     }
@@ -143,16 +158,20 @@ uint64 sys_munmap(uint64 addr, uint64 len)
 {
     struct proc *p = curr_proc();
 
+    // must be page aligned
     if (addr % PGSIZE != 0) return -1;
 
-	uint64 end = PGROUNDUP(addr + len);
+    // make sure we cover full pages
+    uint64 end = PGROUNDUP(addr + len);
 
-	for (uint64 a = addr; a < end; a += PGSIZE) {
+    // go through each page and remove it
+    for (uint64 a = addr; a < end; a += PGSIZE) {
 
-        
+        // if it's not mapped, that's an error
         if (walkaddr(p->pagetable, a) == 0)
             return -1;
 
+        // remove mapping and free memory
         uvmunmap(p->pagetable, a, 1, 1);
     }
 
