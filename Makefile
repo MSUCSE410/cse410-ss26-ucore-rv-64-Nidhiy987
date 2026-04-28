@@ -27,6 +27,8 @@ ifeq (,$(findstring initproc.o,$(OBJS)))
 	AS_OBJS += $(BUILDDIR)/$K/initproc.o
 endif
 
+OBJS := $(filter-out $(BUILDDIR)/$K/link_app.o,$(OBJS))
+
 INIT_PROC ?= usershell
 
 $(K)/initproc.o: $K/initproc.S

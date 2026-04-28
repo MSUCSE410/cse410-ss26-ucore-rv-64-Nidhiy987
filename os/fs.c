@@ -114,6 +114,8 @@ struct inode *ialloc(uint dev, short type)
 		if (dip->type == 0) { // a free inode
 			memset(dip, 0, sizeof(*dip));
 			dip->type = type;
+			// every newly created file starts with one directory entry pointing to it
+			dip->nlink = 1;
 			bwrite(bp);
 			brelse(bp);
 			return iget(dev, inum);
@@ -137,6 +139,8 @@ void iupdate(struct inode *ip)
 	dip->type = ip->type;
 	dip->size = ip->size;
 	// LAB4: you may need to update link count here
+	// the in-memory link count back to disk
+	dip->nlink = ip->nlink;
 	memmove(dip->addrs, ip->addrs, sizeof(ip->addrs));
 	bwrite(bp);
 	brelse(bp);
@@ -190,11 +194,13 @@ void ivalid(struct inode *ip)
 		ip->type = dip->type;
 		ip->size = dip->size;
 		// LAB4: You may need to get lint count here
+		// load the link count from disk into the in-memory inode
+		ip->nlink = dip->nlink;
 		memmove(ip->addrs, dip->addrs, sizeof(ip->addrs));
 		brelse(bp);
 		ip->valid = 1;
 		if (ip->type == 0)
-			panic("ivalid: no type");
+			return;
 	}
 }
 
@@ -208,7 +214,7 @@ void ivalid(struct inode *ip)
 void iput(struct inode *ip)
 {
 	// LAB4: Unmark the condition and change link count variable name (nlink) if needed
-	if (ip->ref == 1 && ip->valid && 0 /*&& ip->nlink == 0*/) {
+	if (ip->ref == 1 && ip->valid && ip->nlink == 0) {
 		// inode has no links and no other references: truncate and free.
 		itrunc(ip);
 		ip->type = 0;
@@ -429,6 +435,36 @@ int dirlink(struct inode *dp, char *name, uint inum)
 }
 
 // LAB4: You may want to add dirunlink here
+// Project 4 hard links:
+// remove a filename from the root directory by clearing its directory entry.
+// This only removes the name. The actual inode/data is deleted later if nlink becomes 0.
+int dirunlink(struct inode *dp, char *name)
+{
+	uint off;
+	struct dirent de;
+
+	if (dp->type != T_DIR)
+		panic("dirunlink not DIR");
+
+	for (off = 0; off < dp->size; off += sizeof(de)) {
+		if (readi(dp, 0, (uint64)&de, off, sizeof(de)) != sizeof(de))
+			panic("dirunlink read");
+
+		if (de.inum == 0)
+			continue;
+
+		if (strncmp(name, de.name, DIRSIZ) == 0) {
+			memset(&de, 0, sizeof(de));
+
+			if (writei(dp, 0, (uint64)&de, off, sizeof(de)) != sizeof(de))
+				panic("dirunlink write");
+
+			return 0;
+		}
+	}
+
+	return -1;
+}
 
 //Return the inode of the root directory
 struct inode *root_dir()

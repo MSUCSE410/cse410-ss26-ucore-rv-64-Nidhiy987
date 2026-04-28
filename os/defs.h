@@ -19,5 +19,6 @@
 #define MAX(a, b) (a > b ? a : b)
 
 #define NULL ((void *)0)
+int dirunlink(struct inode *, char *);
 
 #endif // DEF_H

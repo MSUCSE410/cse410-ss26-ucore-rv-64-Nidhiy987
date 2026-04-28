@@ -6,6 +6,7 @@
 
 #define NPROC (512)
 #define FD_BUFFER_SIZE (16)
+#define BIG_STRIDE 1000000
 
 struct file;
 
@@ -43,12 +44,16 @@ struct proc {
 	uint64 max_page;
 	struct proc *parent; // Parent process
 	uint64 exit_code;
+	long long priority;
+	uint64 pass;
+	uint64 stride;
 	struct file *files
 		[FD_BUFFER_SIZE]; //File descriptor table, using to record the files opened by the process
 };
 
 int cpuid();
 struct proc *curr_proc();
+int spawn(char *);
 void exit(int);
 void proc_init();
 void scheduler() __attribute__((noreturn));

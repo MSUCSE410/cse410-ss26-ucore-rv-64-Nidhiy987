@@ -144,14 +144,25 @@ uint64 sys_wait(int pid, uint64 va)
 
 uint64 sys_spawn(uint64 va)
 {
-	// TODO: your job is to complete the sys call
-	return -1;
+	struct proc *p = curr_proc();
+	char name[200];
+
+	if (copyinstr(p->pagetable, name, va, 200) < 0)
+		return -1;
+
+	return spawn(name);
 }
 
 uint64 sys_set_priority(long long prio)
 {
-	// TODO: your job is to complete the sys call
-	return -1;
+	if (prio < 2)
+		return -1;
+
+	struct proc *p = curr_proc();
+	p->priority = prio;
+	p->pass = BIG_STRIDE / prio;
+
+	return prio;
 }
 
 uint64 sys_openat(uint64 va, uint64 omode, uint64 _flags)
@@ -177,21 +188,212 @@ uint64 sys_close(int fd)
 	return 0;
 }
 
-int sys_fstat(int fd,uint64 stat){
-	//TODO: your job is to complete the syscall
-	return -1;
+typedef struct {
+	uint64 dev;
+	uint64 ino;
+	uint32 mode;
+	uint32 nlink;
+	uint64 pad[7];
+} Stat;
+
+#define STAT_DIR  0x040000
+#define STAT_FILE 0x100000
+
+uint64 sys_linkat(int olddirfd, uint64 oldpath_va, int newdirfd, uint64 newpath_va, uint64 flags)
+{
+	struct proc *p = curr_proc();
+	char oldpath[100];
+	char newpath[100];
+
+	if (copyinstr(p->pagetable, oldpath, oldpath_va, 100) < 0)
+		return -1;
+
+	if (copyinstr(p->pagetable, newpath, newpath_va, 100) < 0)
+		return -1;
+
+	if (strncmp(oldpath, newpath, 100) == 0)
+		return -1;
+
+	struct inode *ip = namei(oldpath);
+	if (ip == 0)
+		return -1;
+
+	ivalid(ip);
+
+	struct inode *dp = root_dir();
+	if (dirlink(dp, newpath, ip->inum) < 0) {
+		iput(dp);
+		iput(ip);
+		return -1;
+	}
+
+	ip->nlink++;
+	iupdate(ip);
+
+	iput(dp);
+	iput(ip);
+
+	return 0;
 }
 
-int sys_linkat(int olddirfd, uint64 oldpath, int newdirfd, uint64 newpath, uint64 flags){
-	//TODO: your job is to complete the syscall
-	return -1;
+uint64 sys_unlinkat(int dirfd, uint64 path_va, uint64 flags)
+{
+	struct proc *p = curr_proc();
+	char path[100];
+
+	if (copyinstr(p->pagetable, path, path_va, 100) < 0)
+		return -1;
+
+	struct inode *ip = namei(path);
+	if (ip == 0)
+		return -1;
+
+	ivalid(ip);
+
+	struct inode *dp = root_dir();
+	if (dirunlink(dp, path) < 0) {
+		iput(dp);
+		iput(ip);
+		return -1;
+	}
+
+	ip->nlink--;
+
+	if (ip->nlink == 0) {
+		itrunc(ip);
+		ip->type = 0;
+	}
+
+	iupdate(ip);
+
+	iput(dp);
+	iput(ip);
+
+	return 0;
 }
 
-int sys_unlinkat(int dirfd, uint64 name, uint64 flags){
-	//TODO: your job is to complete the syscall
-	return -1;
+uint64 sys_fstat(int fd, uint64 st_va)
+{
+	struct proc *p = curr_proc();
+
+	if (fd < 0 || fd >= FD_BUFFER_SIZE)
+		return -1;
+
+	struct file *f = p->files[fd];
+	if (f == 0)
+		return -1;
+
+	if (st_va == 0)
+		return -1;
+
+	struct inode *ip = f->ip;
+	if (ip == 0)
+		return -1;
+
+	ivalid(ip);
+
+	Stat st;
+	memset(&st, 0, sizeof(st));
+
+	st.dev = 0;
+	st.ino = ip->inum;
+	st.nlink = ip->nlink;
+
+	if (ip->type == T_DIR)
+		st.mode = STAT_DIR;
+	else
+		st.mode = STAT_FILE;
+
+	if (copyout(p->pagetable, st_va, (char *)&st, sizeof(st)) < 0)
+		return -1;
+
+	return 0;
+}
+uint64 sys_mmap(uint64 addr, uint64 len, uint64 port, uint64 flag, uint64 fd)
+{
+	if (len == 0)
+		return 0;
+
+	if (len > (1UL << 30))
+		return -1;
+
+	if (addr % PGSIZE != 0)
+		return -1;
+
+	if (addr >= MAXVA || addr + len < addr || addr + len > MAXVA)
+		return -1;
+
+	if ((port & ~0x7) != 0)
+		return -1;
+
+	if ((port & 0x7) == 0)
+		return -1;
+
+	struct proc *p = curr_proc();
+
+	uint64 start = addr;
+	uint64 end = PGROUNDUP(addr + len);
+
+	for (uint64 a = start; a < end; a += PGSIZE) {
+		if (walkaddr(p->pagetable, a) != 0)
+			return -1;
+	}
+
+	int perm = PTE_U;
+	if (port & 1)
+		perm |= PTE_R;
+	if (port & 2)
+		perm |= PTE_W;
+	if (port & 4)
+		perm |= PTE_X;
+
+	for (uint64 a = start; a < end; a += PGSIZE) {
+		void *mem = kalloc();
+		if (mem == 0) {
+			uvmunmap(p->pagetable, start, (a - start) / PGSIZE, 1);
+			return -1;
+		}
+
+		memset(mem, 0, PGSIZE);
+
+		if (mappages(p->pagetable, a, PGSIZE, (uint64)mem, perm) != 0) {
+			kfree(mem);
+			uvmunmap(p->pagetable, start, (a - start) / PGSIZE, 1);
+			return -1;
+		}
+	}
+
+	// if (end > p->max_page)
+	// 	p->max_page = end;
+
+	return 0;
 }
 
+uint64 sys_munmap(uint64 addr, uint64 len)
+{
+	if (len == 0)
+		return 0;
+
+	if (addr % PGSIZE != 0)
+		return -1;
+
+	if (addr >= MAXVA || addr + len < addr || addr + len > MAXVA)
+		return -1;
+
+	struct proc *p = curr_proc();
+
+	uint64 start = addr;
+	uint64 end = PGROUNDUP(addr + len);
+
+	for (uint64 a = start; a < end; a += PGSIZE) {
+		if (walkaddr(p->pagetable, a) == 0)
+			return -1;
+	}
+
+	uvmunmap(p->pagetable, start, (end - start) / PGSIZE, 1);
+
+	return 0;
+}
 extern char trap_page[];
 
 void syscall()
@@ -239,16 +441,29 @@ void syscall()
 	case SYS_wait4:
 		ret = sys_wait(args[0], args[1]);
 		break;
-	case SYS_fstat:
-	    ret = sys_fstat(args[0],args[1]);
+	case SYS_mmap:
+		ret = sys_mmap(args[0], args[1], args[2], args[3], args[4]);
+		break;
+
+	case SYS_munmap:
+		ret = sys_munmap(args[0], args[1]);
 		break;
 	case SYS_linkat:
-	    ret = sys_linkat(args[0],args[1],args[2],args[3],args[4]);
+		ret = sys_linkat(args[0], args[1], args[2], args[3], args[4]);
 		break;
+
 	case SYS_unlinkat:
-	    ret = sys_unlinkat(args[0],args[1],args[2]);
+		ret = sys_unlinkat(args[0], args[1], args[2]);
+		break;
+
+	case SYS_fstat:
+		ret = sys_fstat(args[0], args[1]);
+		break;
 	case SYS_spawn:
 		ret = sys_spawn(args[0]);
+		break;
+	case SYS_setpriority:
+		ret = sys_set_priority(args[0]);
 		break;
 	default:
 		ret = -1;

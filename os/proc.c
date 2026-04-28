@@ -74,6 +74,7 @@ void add_task(struct proc *p)
 struct proc *allocproc()
 {
 	struct proc *p;
+
 	for (p = pool; p < &pool[NPROC]; p++) {
 		if (p->state == UNUSED) {
 			goto found;
@@ -82,13 +83,17 @@ struct proc *allocproc()
 	return 0;
 
 found:
-	// init proc
 	p->pid = allocpid();
 	p->state = USED;
 	p->ustack = 0;
 	p->max_page = 0;
 	p->parent = NULL;
 	p->exit_code = 0;
+
+	p->stride = 0;
+	p->priority = 16;
+	p->pass = BIG_STRIDE / p->priority;
+
 	p->pagetable = uvmcreate((uint64)p->trapframe);
 	memset(&p->context, 0, sizeof(p->context));
 	memset((void *)p->kstack, 0, KSTACK_SIZE);
@@ -115,31 +120,58 @@ int init_stdio(struct proc *p)
 //  - swtch to start running that process.
 //  - eventually that process transfers control
 //    via swtch back to the scheduler.
+// void scheduler()
+// {
+// 	struct proc *p;
+// 	for (;;) {
+// 		/*int has_proc = 0;
+// 		for (p = pool; p < &pool[NPROC]; p++) {
+// 			if (p->state == RUNNABLE) {
+// 				has_proc = 1;
+// 				tracef("swtich to proc %d", p - pool);
+// 				p->state = RUNNING;
+// 				current_proc = p;
+// 				swtch(&idle.context, &p->context);
+// 			}
+// 		}
+// 		if(has_proc == 0) {
+// 			panic("all app are over!\n");
+// 		}*/
+// 		p = fetch_task();
+// 		if (p == NULL) {
+// 			panic("all app are over!\n");
+// 		}
+// 		tracef("swtich to proc %d", p - pool);
+// 		p->state = RUNNING;
+// 		current_proc = p;
+// 		swtch(&idle.context, &p->context);
+// 	}
+// }
+
 void scheduler()
 {
 	struct proc *p;
+
 	for (;;) {
-		/*int has_proc = 0;
+		struct proc *best = NULL;
+
 		for (p = pool; p < &pool[NPROC]; p++) {
-			if (p->state == RUNNABLE) {
-				has_proc = 1;
-				tracef("swtich to proc %d", p - pool);
-				p->state = RUNNING;
-				current_proc = p;
-				swtch(&idle.context, &p->context);
-			}
+			if (p->state != RUNNABLE)
+				continue;
+
+			if (best == NULL || p->stride < best->stride)
+				best = p;
 		}
-		if(has_proc == 0) {
-			panic("all app are over!\n");
-		}*/
-		p = fetch_task();
-		if (p == NULL) {
+
+		if (best == NULL) {
 			panic("all app are over!\n");
 		}
-		tracef("swtich to proc %d", p - pool);
-		p->state = RUNNING;
-		current_proc = p;
-		swtch(&idle.context, &p->context);
+
+		best->state = RUNNING;
+		current_proc = best;
+		best->stride += best->pass;
+
+		swtch(&idle.context, &best->context);
 	}
 }
 
@@ -162,7 +194,7 @@ void sched()
 void yield()
 {
 	current_proc->state = RUNNABLE;
-	add_task(current_proc);
+	//add_task(current_proc);
 	sched();
 }
 
@@ -177,10 +209,19 @@ void freepagetable(pagetable_t pagetable, uint64 max_page)
 
 void freeproc(struct proc *p)
 {
-	if (p->pagetable)
-		freepagetable(p->pagetable, p->max_page);
+	if (p->pagetable) {
+	for (uint64 a = 0; a < MAXVA; a += PGSIZE) {
+		if (a == TRAMPOLINE || a == TRAPFRAME)
+			continue;
+
+		if (walkaddr(p->pagetable, a) != 0)
+			uvmunmap(p->pagetable, a, 1, 1);
+	}
+
+	freepagetable(p->pagetable, 0);
+}
 	p->pagetable = 0;
-	for (int i = 0; i > FD_BUFFER_SIZE; i++) {
+	for (int i = 0; i < FD_BUFFER_SIZE; i++) {
 		if (p->files[i] != NULL) {
 			fileclose(p->files[i]);
 		}
@@ -216,7 +257,7 @@ int fork()
 	np->trapframe->a0 = 0;
 	np->parent = p;
 	np->state = RUNNABLE;
-	add_task(np);
+	//add_task(np);
 	return np->pid;
 }
 
@@ -297,7 +338,7 @@ int wait(int pid, int *code)
 			return -1;
 		}
 		p->state = RUNNABLE;
-		add_task(p);
+		//add_task(p);
 		sched();
 	}
 }
@@ -321,6 +362,32 @@ void exit(int code)
 		}
 	}
 	sched();
+}
+int spawn(char *path)
+{
+	struct proc *np;
+	struct inode *ip;
+
+	// get file inode
+	if ((ip = namei(path)) == 0)
+		return -1;
+
+	// allocate process
+	if ((np = allocproc()) == 0) {
+		iput(ip);
+		return -1;
+	}
+
+	// load program into new process memory
+	bin_loader(ip, np);
+
+	iput(ip);
+
+	// set parent and make runnable
+	np->parent = curr_proc();
+	np->state = RUNNABLE;
+
+	return np->pid;
 }
 
 int fdalloc(struct file *f)
