@@ -7,6 +7,10 @@
 
 #define NPROC (512)
 #define FD_BUFFER_SIZE (16)
+#define BIG_STRIDE 1000000
+// BIG_STRIDE is used to calculate each process's pass value.
+// pass = BIG_STRIDE / priority.
+// Higher priority gives smaller pass, so that process runs more often.
 
 struct file;
 
@@ -44,6 +48,16 @@ struct proc {
 	uint64 max_page;
 	struct proc *parent; // Parent process
 	uint64 exit_code;
+	long long priority;
+		// priority decides how much CPU time this process should get.
+	// The default priority will be 16 in allocproc().
+		// pass is how much stride increases each time this process runs.
+	// pass = BIG_STRIDE / priority.
+	uint64 pass;
+
+	// stride tracks how much CPU time this process has received so far.
+	// The scheduler chooses the RUNNABLE process with the smallest stride.
+	uint64 stride;
 	struct file *files[FD_BUFFER_SIZE];
 };
 
@@ -56,6 +70,7 @@ void sched();
 void yield();
 int fork();
 int exec(char *);
+int spawn(char *);
 int wait(int, int *);
 void add_task(struct proc *);
 struct proc *pop_task();

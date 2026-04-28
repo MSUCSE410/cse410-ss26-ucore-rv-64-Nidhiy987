@@ -83,6 +83,12 @@ found:
 	p->max_page = 0;
 	p->parent = NULL;
 	p->exit_code = 0;
+	// default priority = 16 
+	p->priority = 16;
+
+	// pass = BIG_STRIDE / priority
+	// determines how much stride increases after each run
+	p->pass = BIG_STRIDE / p->priority;
 	p->pagetable = uvmcreate((uint64)p->trapframe);
 	memset(&p->context, 0, sizeof(p->context));
 	memset((void *)p->kstack, 0, KSTACK_SIZE);
@@ -114,14 +120,35 @@ void scheduler()
 		if(has_proc == 0) {
 			panic("all app are over!\n");
 		}*/
-		p = fetch_task();
-		if (p == NULL) {
-			panic("all app are over!\n");
+
+	// pick the RUNNABLE process with the smallest stride
+
+	struct proc *best = NULL;
+
+	for (p = pool; p < &pool[NPROC]; p++) {
+		if (p->state != RUNNABLE)
+			continue;
+
+		// choose process with smallest stride
+		if (best == NULL || p->stride < best->stride) {
+			best = p;
 		}
-		tracef("swtich to proc %d", p - pool);
-		p->state = RUNNING;
-		current_proc = p;
-		swtch(&idle.context, &p->context);
+	}
+
+	if (best == NULL) {
+		panic("all app are over!\n");
+	}
+
+	// run selected process
+	tracef("switch to proc %d", best - pool);
+	best->state = RUNNING;
+	current_proc = best;
+
+	// after running, increase stride
+	// smaller pass => smaller increase => runs more often
+	best->stride += best->pass;
+
+	swtch(&idle.context, &best->context);
 	}
 }
 
@@ -144,7 +171,7 @@ void sched()
 void yield()
 {
 	current_proc->state = RUNNABLE;
-	add_task(current_proc);
+	//add_task(current_proc);
 	sched();
 }
 
@@ -184,10 +211,27 @@ int fork()
 	np->trapframe->a0 = 0;
 	np->parent = p;
 	np->state = RUNNABLE;
-	add_task(np);
+	//add_task(np);
 	return np->pid;
 }
+int spawn(char *name)
+{
+	struct proc *np;
 
+	if (get_id_by_name(name) < 0)
+		return -1;
+
+	if ((np = allocproc()) == 0)
+		return -1;
+
+	loader(get_id_by_name(name), np);
+
+	np->parent = curr_proc();
+	np->state = RUNNABLE;
+	//add_task(np);
+
+	return np->pid;
+}
 int exec(char *name)
 {
 	int id = get_id_by_name(name);
@@ -226,7 +270,7 @@ int wait(int pid, int *code)
 			return -1;
 		}
 		p->state = RUNNABLE;
-		add_task(p);
+		//add_task(p);
 		sched();
 	}
 }

@@ -92,17 +92,113 @@ uint64 sys_wait(int pid, uint64 va)
 	return wait(pid, code);
 }
 
-uint64 sys_spawn(uint64 va)
+uint64 sys_spawn(uint64 va) //syscall that works like fork + exec: it creates a 
+// child process and loads a target program into it.
 {
-	// TODO: your job is to complete the sys call
-	return -1;
+	struct proc *p = curr_proc();
+	char name[200];
+
+	if (copyinstr(p->pagetable, name, va, 200) < 0)
+		return -1;
+
+	return spawn(name);
 }
 
-uint64 sys_set_priority(long long prio){
-    // TODO: your job is to complete the sys call
-    return -1;
+uint64 sys_setpriority(long long prio)
+{
+	//stride scheduling depends on process priority. The assignment says each process should have a priority, 
+	// pass value, and stride value.
+	if (prio < 2)
+		return -1;
+
+	struct proc *p = curr_proc();
+	p->priority = prio;
+	p->pass = BIG_STRIDE / prio;
+
+	return prio;
+}
+uint64 sys_mmap(uint64 addr, uint64 len, uint64 port, uint64 flag, uint64 fd)
+{
+    if (len == 0)
+        return 0;
+
+    if (len > (1UL << 30))
+        return -1;
+
+    if (addr % PGSIZE != 0)
+        return -1;
+
+    if (addr >= MAXVA || addr + len < addr || addr + len > MAXVA)
+        return -1;
+
+    if ((port & ~0x7) != 0)
+        return -1;
+
+    if ((port & 0x7) == 0)
+        return -1;
+
+    struct proc *p = curr_proc();
+
+    uint64 start = addr;
+    uint64 end = PGROUNDUP(addr + len);
+
+    for (uint64 a = start; a < end; a += PGSIZE) {
+        if (walkaddr(p->pagetable, a) != 0)
+            return -1;
+    }
+
+    int perm = PTE_U;
+    if (port & 1)
+        perm |= PTE_R;
+    if (port & 2)
+        perm |= PTE_W;
+    if (port & 4)
+        perm |= PTE_X;
+
+    for (uint64 a = start; a < end; a += PGSIZE) {
+        void *mem = kalloc();
+        if (mem == 0) {
+            uvmunmap(p->pagetable, start, (a - start) / PGSIZE, 1);
+            return -1;
+        }
+
+        memset(mem, 0, PGSIZE);
+
+        if (mappages(p->pagetable, a, PGSIZE, (uint64)mem, perm) != 0) {
+            kfree(mem);
+            uvmunmap(p->pagetable, start, (a - start) / PGSIZE, 1);
+            return -1;
+        }
+    }
+
+    return 0;
 }
 
+uint64 sys_munmap(uint64 addr, uint64 len)
+{
+    if (len == 0)
+        return 0;
+
+    if (addr % PGSIZE != 0)
+        return -1;
+
+    if (addr >= MAXVA || addr + len < addr || addr + len > MAXVA)
+        return -1;
+
+    struct proc *p = curr_proc();
+
+    uint64 start = addr;
+    uint64 end = PGROUNDUP(addr + len);
+
+    for (uint64 a = start; a < end; a += PGSIZE) {
+        if (walkaddr(p->pagetable, a) == 0)
+            return -1;
+    }
+
+    uvmunmap(p->pagetable, start, (end - start) / PGSIZE, 1);
+
+    return 0;
+}
 
 extern char trap_page[];
 
@@ -145,8 +241,20 @@ void syscall()
 	case SYS_wait4:
 		ret = sys_wait(args[0], args[1]);
 		break;
+
+	case SYS_munmap:
+		ret = sys_munmap(args[0], args[1]);
+		break;
+
+	case SYS_mmap:
+		ret = sys_mmap(args[0], args[1], args[2], args[3], args[4]);
+		break;
+
 	case SYS_spawn:
 		ret = sys_spawn(args[0]);
+		break;
+	case SYS_setpriority:
+		ret = sys_setpriority(args[0]);
 		break;
 	default:
 		ret = -1;
