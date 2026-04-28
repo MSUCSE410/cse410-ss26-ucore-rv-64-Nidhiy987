@@ -111,69 +111,83 @@ uint64 sys_task_info(TaskInfo *ti)
 
 uint64 sys_mmap(uint64 addr, uint64 len, uint64 port, uint64 flag, uint64 fd)
 {
-    // nothing to do if length is 0
-    if (len == 0) return 0;
+    if (len == 0)
+        return 0;
 
-    // basic checks to make sure the address is valid
-    if (addr >= MAXVA) return -1;
-    if (addr == 0) return -1;
+    if (len > (1UL << 30))
+        return -1;
 
-    // must start on a page boundary
-    if (addr % PGSIZE != 0) return -1;
+    if (addr % PGSIZE != 0)
+        return -1;
 
-    // only allow R/W/X bits
-    if (port & ~0x7) return -1;
-    if ((port & 0x7) == 0) return -1;
+    if (addr >= MAXVA || addr + len < addr || addr + len > MAXVA)
+        return -1;
+
+    if ((port & ~0x7) != 0)
+        return -1;
+
+    if ((port & 0x7) == 0)
+        return -1;
 
     struct proc *p = curr_proc();
 
-    // map one page at a time
-    for (uint64 a = addr; a < addr + len; a += PGSIZE) {
+    uint64 start = addr;
+    uint64 end = PGROUNDUP(addr + len);
 
-        // don’t allow mapping over something that already exists
+    for (uint64 a = start; a < end; a += PGSIZE) {
         if (walkaddr(p->pagetable, a) != 0)
             return -1;
+    }
 
-        // allocate a physical page
+    int perm = PTE_U;
+    if (port & 1)
+        perm |= PTE_R;
+    if (port & 2)
+        perm |= PTE_W;
+    if (port & 4)
+        perm |= PTE_X;
+
+    for (uint64 a = start; a < end; a += PGSIZE) {
         void *mem = kalloc();
-        if (!mem) return -1;
+        if (mem == 0) {
+            uvmunmap(p->pagetable, start, (a - start) / PGSIZE, 1);
+            return -1;
+        }
 
-        // clear it so it's clean
         memset(mem, 0, PGSIZE);
 
-        // build permissions
-        int perm = PTE_U;
-        if (port & 1) perm |= PTE_R;
-        if (port & 2) perm |= PTE_W;
-        if (port & 4) perm |= PTE_X;
-
-        // connect virtual address to physical memory
-        if (mappages(p->pagetable, a, PGSIZE, (uint64)mem, perm) != 0)
+        if (mappages(p->pagetable, a, PGSIZE, (uint64)mem, perm) != 0) {
+            kfree(mem);
+            uvmunmap(p->pagetable, start, (a - start) / PGSIZE, 1);
             return -1;
+        }
     }
 
     return 0;
 }
+
 uint64 sys_munmap(uint64 addr, uint64 len)
 {
+    if (len == 0)
+        return 0;
+
+    if (addr % PGSIZE != 0)
+        return -1;
+
+    if (addr >= MAXVA || addr + len < addr || addr + len > MAXVA)
+        return -1;
+
     struct proc *p = curr_proc();
 
-    // must be page aligned
-    if (addr % PGSIZE != 0) return -1;
-
-    // make sure we cover full pages
+    uint64 start = addr;
     uint64 end = PGROUNDUP(addr + len);
 
-    // go through each page and remove it
-    for (uint64 a = addr; a < end; a += PGSIZE) {
-
-        // if it's not mapped, that's an error
+    for (uint64 a = start; a < end; a += PGSIZE) {
         if (walkaddr(p->pagetable, a) == 0)
             return -1;
-
-        // remove mapping and free memory
-        uvmunmap(p->pagetable, a, 1, 1);
     }
+
+    uvmunmap(p->pagetable, start, (end - start) / PGSIZE, 1);
 
     return 0;
 }
