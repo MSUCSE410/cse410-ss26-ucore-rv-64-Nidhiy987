@@ -1,0 +1,472 @@
+make -C user CHAPTER=8 BASE=
+make[1]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user'
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- The ASM compiler identification is GNU
+-- Found assembler: /usr/bin/cc
+-- Configuring done (1.0s)
+-- Generating done (0.2s)
+-- Build files have been written to: /workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build
+/bin/sh: 1: proc: not found
+make[2]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[3]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[  1%] Generating syscall_ids.h
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[  2%] Building ASM object CMakeFiles/ulib.dir/lib/arch/riscv/crt.S.o
+[  2%] Building C object CMakeFiles/ulib.dir/lib/main.c.o
+[  3%] Building C object CMakeFiles/ulib.dir/lib/syscall.c.o
+[  4%] Building C object CMakeFiles/ulib.dir/lib/string.c.o
+[  5%] Building C object CMakeFiles/ulib.dir/lib/stdio.c.o
+[  6%] Building C object CMakeFiles/ulib.dir/lib/stdlib.c.o
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/lib/syscall.c: In function ‘get_mtime’:
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/lib/syscall.c:79:1: warning: control reaches end of non-void function [-Wreturn-type]
+   79 | }
+      | ^
+[  7%] Linking C static library libulib.a
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[  7%] Built target ulib
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[  8%] Building C object CMakeFiles/__ch2_bad_register.dir/src/__ch2_bad_register.c.o
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[  9%] Building C object CMakeFiles/ch2b_exit.dir/src/ch2b_exit.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[  9%] Building C object CMakeFiles/__ch2_bad_address.dir/src/__ch2_bad_address.c.o
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 11%] Building C object CMakeFiles/ch2b_hello_world.dir/src/ch2b_hello_world.c.o
+[ 11%] Building C object CMakeFiles/ch2b_power.dir/src/ch2b_power.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 12%] Building C object CMakeFiles/__ch2_bad_instruction.dir/src/__ch2_bad_instruction.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 13%] Building C object CMakeFiles/ch3_setprio.dir/src/ch3_setprio.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 13%] Building C object CMakeFiles/ch2t_write0.dir/src/ch2t_write0.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 14%] Building C object CMakeFiles/ch3b_sleep1.dir/src/ch3b_sleep1.c.o
+[ 15%] Building C object CMakeFiles/ch2b_write1.dir/src/ch2b_write1.c.o
+[ 16%] Building C object CMakeFiles/ch3b_yield0.dir/src/ch3b_yield0.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 17%] Building C object CMakeFiles/ch3b_sleep.dir/src/ch3b_sleep.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 18%] Building C object CMakeFiles/ch3t_stride0.dir/src/ch3t_stride0.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 21%] Building C object CMakeFiles/ch3b_yield2.dir/src/ch3b_yield2.c.o
+[ 20%] Building C object CMakeFiles/ch3b_yield1.dir/src/ch3b_yield1.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 19%] Building C object CMakeFiles/ch3t_stride1.dir/src/ch3t_stride1.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch3b_sleep1.c: In function ‘main’:
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch3b_sleep1.c:15:23: warning: implicit declaration of function ‘get_mtime’; did you mean ‘get_time’? [-Wimplicit-function-declaration]
+   15 |         int64 start = get_mtime();
+      |                       ^~~~~~~~~
+      |                       get_time
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch3b_sleep.c: In function ‘main’:
+[ 22%] Building C object CMakeFiles/ch3t_stride2.dir/src/ch3t_stride2.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch3b_sleep.c:13:30: warning: implicit declaration of function ‘get_mtime’; did you mean ‘get_time’? [-Wimplicit-function-declaration]
+   13 |         int64 current_time = get_mtime();
+      |                              ^~~~~~~~~
+      |                              get_time
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 22%] Linking C executable riscv64/ch2b_exit
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 23%] Linking C executable riscv64/__ch2_bad_register
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch3t_stride0.c: In function ‘count_during’:
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch3t_stride0.c:21:29: warning: implicit declaration of function ‘get_mtime’; did you mean ‘get_time’? [-Wimplicit-function-declaration]
+   21 |         uint64 start_time = get_mtime();
+      |                             ^~~~~~~~~
+      |                             get_time
+[ 24%] Building C object CMakeFiles/ch3t_stride3.dir/src/ch3t_stride3.c.o
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch3t_stride1.c: In function ‘count_during’:
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch3t_stride1.c:21:29: warning: implicit declaration of function ‘get_mtime’; did you mean ‘get_time’? [-Wimplicit-function-declaration]
+   21 |         uint64 start_time = get_mtime();
+      |                             ^~~~~~~~~
+      |                             get_time
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 25%] Linking C executable riscv64/ch2b_hello_world
+[ 26%] Linking C executable riscv64/__ch2_bad_address
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch3t_stride3.c: In function ‘count_during’:
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch3t_stride3.c:21:29: warning: implicit declaration of function ‘get_mtime’; did you mean ‘get_time’? [-Wimplicit-function-declaration]
+   21 |         uint64 start_time = get_mtime();
+      |                             ^~~~~~~~~
+      |                             get_time
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch3t_stride2.c: In function ‘count_during’:
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch3t_stride2.c:21:29: warning: implicit declaration of function ‘get_mtime’; did you mean ‘get_time’? [-Wimplicit-function-declaration]
+   21 |         uint64 start_time = get_mtime();
+      |                             ^~~~~~~~~
+      |                             get_time
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 27%] Linking C executable riscv64/__ch2_bad_instruction
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 26%] Building C object CMakeFiles/ch3t_stride4.dir/src/ch3t_stride4.c.o
+[ 28%] Building C object CMakeFiles/ch3t_stride5.dir/src/ch3t_stride5.c.o
+[ 29%] Linking C executable riscv64/ch3_setprio
+[ 29%] Linking C executable riscv64/ch3b_sleep1
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 31%] Building C object CMakeFiles/ch4_mmap3.dir/src/ch4_mmap3.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 31%] Building C object CMakeFiles/ch5_exit0.dir/src/ch5_exit0.c.o
+[ 32%] Building C object CMakeFiles/ch4_mmap2.dir/src/ch4_mmap2.c.o
+[ 34%] Building C object CMakeFiles/ch4_mmap0.dir/src/ch4_mmap0.c.o
+[ 34%] Building C object CMakeFiles/ch4_unmap.dir/src/ch4_unmap.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 35%] Linking C executable riscv64/ch2b_power
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch3t_stride4.c: In function ‘count_during’:
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch3t_stride4.c:21:29: warning: implicit declaration of function ‘get_mtime’; did you mean ‘get_time’? [-Wimplicit-function-declaration]
+   21 |         uint64 start_time = get_mtime();
+      |                             ^~~~~~~~~
+      |                             get_time
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch3t_stride5.c: In function ‘count_during’:
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 36%] Linking C executable riscv64/ch2b_write1
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 37%] Building C object CMakeFiles/ch4_mmap1.dir/src/ch4_mmap1.c.o
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch3t_stride5.c:21:29: warning: implicit declaration of function ‘get_mtime’; did you mean ‘get_time’? [-Wimplicit-function-declaration]
+   21 |         uint64 start_time = get_mtime();
+      |                             ^~~~~~~~~
+      |                             get_time
+[ 37%] Building C object CMakeFiles/ch4_unmap2.dir/src/ch4_unmap2.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 38%] Building C object CMakeFiles/ch5_exit1.dir/src/ch5_exit1.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 39%] Linking C executable riscv64/ch3b_sleep
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 39%] Linking C executable riscv64/ch3t_stride0
+[ 40%] Linking C executable riscv64/ch3b_yield0
+[ 41%] Building C object CMakeFiles/ch5_spawn0.dir/src/ch5_spawn0.c.o
+[ 41%] Building C object CMakeFiles/ch5_spawn1.dir/src/ch5_spawn1.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 44%] Building C object CMakeFiles/ch5_usertest.dir/src/ch5_usertest.c.o
+[ 42%] Linking C executable riscv64/ch2t_write0
+[ 44%] Linking C executable riscv64/ch3b_yield1
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 46%] Linking C executable riscv64/ch3b_yield2
+[ 46%] Building C object CMakeFiles/ch5b_exec_simple.dir/src/ch5b_exec_simple.c.o
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 48%] Building C object CMakeFiles/ch5b_exit.dir/src/ch5b_exit.c.o
+[ 48%] Building C object CMakeFiles/ch5b_forktest0.dir/src/ch5b_forktest0.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 49%] Linking C executable riscv64/ch3t_stride1
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 50%] Building C object CMakeFiles/ch5b_forktest1.dir/src/ch5b_forktest1.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch4_mmap1.c: In function ‘main’:
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch4_mmap1.c:17:15: warning: writing 1 byte into a region of size 0 [-Wstringop-overflow=]
+   17 |         *addr = (uint8)start;
+      |         ~~~~~~^~~~~~~~~~~~~~
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 51%] Linking C executable riscv64/ch3t_stride3
+[ 52%] Linking C executable riscv64/ch3t_stride2
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 54%] Linking C executable riscv64/ch5_exit0
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 53%] Linking C executable riscv64/ch4_mmap2
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 56%] Linking C executable riscv64/ch5_exit1
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 56%] Linking C executable riscv64/ch3t_stride5
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 57%] Building C object CMakeFiles/ch5b_usertest.dir/src/ch5b_usertest.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 57%] Building C object CMakeFiles/ch5b_getpid.dir/src/ch5b_getpid.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 58%] Linking C executable riscv64/ch4_mmap0
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 59%] Building C object CMakeFiles/ch6_mail0.dir/src/ch6_mail0.c.o
+[ 60%] Building C object CMakeFiles/ch6_usertest.dir/src/ch6_usertest.c.o
+[ 61%] Building C object CMakeFiles/ch6b_pipetest.dir/src/ch6b_pipetest.c.o
+[ 63%] Building C object CMakeFiles/ch6_mail3.dir/src/ch6_mail3.c.o
+[ 64%] Linking C executable riscv64/ch3t_stride4
+[ 64%] Building C object CMakeFiles/ch5b_forktest2.dir/src/ch5b_forktest2.c.o
+[ 64%] Linking C executable riscv64/ch4_mmap1
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 65%] Linking C executable riscv64/ch4_unmap2
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 69%] Linking C executable riscv64/ch5b_exec_simple
+[ 69%] Building C object CMakeFiles/ch7_file2.dir/src/ch7_file2.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 70%] Building C object CMakeFiles/ch6b_usertest.dir/src/ch6b_usertest.c.o
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 70%] Built target __ch2_bad_address
+[ 70%] Built target ch2b_hello_world
+make[4]: Entering directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 69%] Building C object CMakeFiles/ch6_mail1.dir/src/ch6_mail1.c.o
+[ 69%] Linking C executable riscv64/ch4_mmap3
+[ 71%] Building C object CMakeFiles/ch7_file0.dir/src/ch7_file0.c.o
+[ 71%] Built target __ch2_bad_register
+[ 72%] Linking C executable riscv64/ch4_unmap
+[ 73%] Linking C executable riscv64/ch5_usertest
+[ 73%] Built target __ch2_bad_instruction
+[ 75%] Building C object CMakeFiles/ch6_mail2.dir/src/ch6_mail2.c.o
+[ 74%] Linking C executable riscv64/ch5b_forktest0
+[ 76%] Linking C executable riscv64/ch5_spawn1
+[ 76%] Built target ch2b_exit
+[ 76%] Building C object CMakeFiles/ch7b_args.dir/src/ch7b_args.c.o
+[ 77%] Built target ch3_setprio
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 78%] Building C object CMakeFiles/ch7b_exec.dir/src/ch7b_exec.c.o
+[ 78%] Building C object CMakeFiles/ch7_usertest.dir/src/ch7_usertest.c.o
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 79%] Linking C executable riscv64/ch5_spawn0
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 80%] Building C object CMakeFiles/ch7_file1.dir/src/ch7_file1.c.o
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 81%] Linking C executable riscv64/ch5b_exit
+[ 81%] Built target ch3b_sleep1
+[ 82%] Building C object CMakeFiles/ch7b_filetest.dir/src/ch7b_filetest.c.o
+[ 82%] Building C object CMakeFiles/usershell.dir/src/usershell.c.o
+[ 84%] Linking C executable riscv64/ch5b_forktest1
+[ 84%] Building C object CMakeFiles/ch7b_usertest.dir/src/ch7b_usertest.c.o
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 84%] Built target ch3b_sleep
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 84%] Built target ch2b_write1
+[ 84%] Built target ch2b_power
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 84%] Built target ch3b_yield0
+[ 84%] Built target ch3t_stride0
+[ 85%] Linking C executable riscv64/ch5b_getpid
+[ 86%] Linking C executable riscv64/ch5b_usertest
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 86%] Built target ch3b_yield2
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 86%] Built target ch3b_yield1
+[ 86%] Built target ch2t_write0
+[ 87%] Linking C executable riscv64/ch6_usertest
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 88%] Linking C executable riscv64/ch6_mail0
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 88%] Linking C executable riscv64/ch7b_exec
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 89%] Linking C executable riscv64/ch5b_forktest2
+[ 89%] Linking C executable riscv64/ch6b_pipetest
+[ 89%] Built target ch3t_stride1
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 90%] Linking C executable riscv64/ch6_mail3
+[ 92%] Linking C executable riscv64/ch7_file0
+[ 92%] Linking C executable riscv64/ch6b_usertest
+[ 92%] Linking C executable riscv64/ch6_mail1
+[ 92%] Built target ch5_exit1
+[ 92%] Built target ch3t_stride2
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 93%] Linking C executable riscv64/ch7b_args
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 93%] Built target ch3t_stride3
+[ 93%] Built target ch3t_stride4
+[ 94%] Linking C executable riscv64/ch7_usertest
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 94%] Built target ch3t_stride5
+[ 95%] Linking C executable riscv64/ch7_file1
+[ 95%] Built target ch4_mmap0
+[ 95%] Built target ch4_mmap2
+[ 95%] Built target ch5_exit0
+[ 96%] Linking C executable riscv64/ch7_file2
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 97%] Linking C executable riscv64/ch7b_filetest
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 98%] Linking C executable riscv64/ch7b_usertest
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 98%] Built target ch4_mmap1
+[ 98%] Built target ch4_unmap2
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 98%] Built target ch4_mmap3
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 98%] Built target ch5b_exec_simple
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 98%] Built target ch4_unmap
+[ 98%] Built target ch5b_exit
+[ 98%] Built target ch5b_forktest0
+[ 98%] Built target ch5_usertest
+[ 99%] Built target ch5_spawn1
+[ 99%] Linking C executable riscv64/ch6_mail2
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 99%] Built target ch5_spawn0
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[ 99%] Built target ch5b_forktest1
+[100%] Linking C executable riscv64/usershell
+/home/codespace/riscv64-linux-musl-cross/bin/../lib/gcc/riscv64-linux-musl/11.2.1/../../../../riscv64-linux-musl/bin/ld: CMakeFiles/ch7b_filetest.dir/src/ch7b_filetest.c.o: in function `main':
+/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/src/ch7b_filetest.c:12: undefined reference to `memcpy'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+collect2: error: ld returned 1 exit status
+make[4]: *** [CMakeFiles/ch7b_filetest.dir/build.make:98: riscv64/ch7b_filetest] Error 1
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[3]: *** [CMakeFiles/Makefile2:1543: CMakeFiles/ch7b_filetest.dir/all] Error 2
+make[3]: *** Waiting for unfinished jobs....
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[100%] Built target ch5b_getpid
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[100%] Built target ch5b_usertest
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[100%] Built target ch5b_forktest2
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[100%] Built target ch6_mail0
+[100%] Built target ch6_usertest
+[100%] Built target ch6b_pipetest
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[100%] Built target ch7b_exec
+[100%] Built target ch6_mail3
+[100%] Built target ch7_file0
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[100%] Built target ch7b_args
+[100%] Built target ch6b_usertest
+[100%] Built target ch6_mail1
+[100%] Built target ch7_usertest
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[100%] Built target ch7_file2
+[100%] Built target ch7_file1
+[100%] Built target ch7b_usertest
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[4]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+[100%] Built target usershell
+[100%] Built target ch6_mail2
+make[3]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[2]: *** [Makefile:91: all] Error 2
+make[2]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user/build'
+make[1]: *** [Makefile:81: binary] Error 2
+make[1]: Leaving directory '/workspaces/cse410-ss26-ucore-rv-64-Nidhiy987/user'
+make: *** [Makefile:134: user] Error 2
